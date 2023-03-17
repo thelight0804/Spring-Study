@@ -1,13 +1,17 @@
 package thelight0804.SpringIntroduction.repository;
+
 import java.util.*;
 import thelight0804.SpringIntroduction.domain.Member;
 
-public class MemoryMemberRepository implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository {
+
   private static Map<Long, Member> store = new HashMap<>();
   private static long sequence = 0L; //key값
 
+
   /**
    * 회원 생성
+   *
    * @param member
    * @return member
    */
@@ -20,6 +24,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
   /**
    * id 찾기
+   *
    * @param id
    * @return Optional.ofNullable()
    */
@@ -30,6 +35,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
   /**
    * 이름 찾기
+   *
    * @param name
    * @return store.filter().findAny()
    */
@@ -42,10 +48,18 @@ public class MemoryMemberRepository implements MemberRepository{
 
   /**
    * 회원 목록 전부 출력
+   *
    * @return 회원 목록
    */
   @Override
   public List<Member> findAll() {
     return new ArrayList<>(store.values());
+  }
+
+  /**
+   * store 초기화
+   */
+  public void clearStore(){
+    store.clear();
   }
 }
