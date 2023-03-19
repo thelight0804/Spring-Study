@@ -48,7 +48,7 @@ public class MemoryMemberRepositoryTest {
     repository.save(member2);
 
     Member result = repository.findByName("member1").get();
-    assertThat(result).isEqualTo(member1); //같은 값인지 확인
+    assertThat(result).isEqualTo(member2); //같은 값인지 확인
   }
 
   @Test
