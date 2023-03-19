@@ -6,11 +6,22 @@ import thelight0804.SpringIntroduction.service.MemberService;
 
 @Controller //Spring Bean
 public class MemberController {
+  //필드 주입
+  //@Autowired private MemberService memberService;
+
+  //생성자 주입
   private final MemberService memberService;
 
-  //생성자
   @Autowired //Connect Spring Beans
   public MemberController(MemberService memberService) {
     this.memberService = memberService;
   }
+
+  //setter 주입
+//  private MemberService memberService;
+//
+//  @Autowired
+//  public void setMemberService(MemberService memberService) {
+//    this.memberService = memberService;
+//  }
 }

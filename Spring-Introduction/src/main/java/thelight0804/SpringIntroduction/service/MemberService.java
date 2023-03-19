@@ -8,12 +8,10 @@ import thelight0804.SpringIntroduction.domain.Member;
 import thelight0804.SpringIntroduction.repository.MemberRepository;
 import thelight0804.SpringIntroduction.repository.MemoryMemberRepository;
 
-@Service //Spring Bean
 public class MemberService {
 
   private final MemberRepository memberRepository;
 
-  @Autowired //Connect Spring Beans
   public MemberService(MemberRepository memberRepository) {
     this.memberRepository = memberRepository;
   }
