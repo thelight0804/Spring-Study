@@ -1,8 +1,10 @@
 package thelight0804.SpringIntroduction.repository;
 
 import java.util.*;
+import org.springframework.stereotype.Repository;
 import thelight0804.SpringIntroduction.domain.Member;
 
+@Repository //Spring Bean
 public class MemoryMemberRepository implements MemberRepository {
 
   private static Map<Long, Member> store = new HashMap<>();
