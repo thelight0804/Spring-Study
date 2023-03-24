@@ -1,34 +1,30 @@
 package thelight0804.SpringIntroduction.service;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import thelight0804.SpringIntroduction.domain.Member;
+import thelight0804.SpringIntroduction.repository.MemberRepository;
 import thelight0804.SpringIntroduction.repository.MemoryMemberRepository;
 
-class MemberServiceTest {
+@SpringBootTest //Use Spring Container
+@Transactional //rollback before test
+class MemberServiceJDBCTest {
 
+  //Add Spring Container DI
+  @Autowired
   MemberService memberService;
-  MemoryMemberRepository memberRepository;
-
-  @BeforeEach //테스트 실행 전
-  public void beforeEach(){
-    memberRepository = new MemoryMemberRepository();
-    memberService = new MemberService(memberRepository);
-  }
-
-  @AfterEach //저장소 초기화
-  public void afterEach() {
-    memberRepository.clearStore();
-  }
+  @Autowired
+  MemberRepository memberRepository;
 
   @Test
-  void 회원가입() {
+  void join() {
     //given 입력 받아서
     Member member = new Member();
     member.setName("member1");
@@ -42,7 +38,7 @@ class MemberServiceTest {
   }
 
   @Test
-  public void 중복_회원_가입(){
+  public void join_same(){
     //given
     Member member1 = new Member();
     member1.setName("member1");
@@ -57,13 +53,5 @@ class MemberServiceTest {
     //같은 예외 내용인지 확인
     assertThat(e.getMessage()).isEqualTo("exist member");
 //    assertThrows(NullPointerException.class,  () -> memberService.join(member11)); //일치하지 않는 예외
-  }
-
-  @Test
-  void findMembers() {
-  }
-
-  @Test
-  void findOne() {
   }
 }
