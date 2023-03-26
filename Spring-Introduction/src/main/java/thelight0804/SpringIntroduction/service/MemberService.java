@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import thelight0804.SpringIntroduction.domain.Member;
 import thelight0804.SpringIntroduction.repository.MemberRepository;
 import thelight0804.SpringIntroduction.repository.MemoryMemberRepository;
 
+@Transactional //Use JPA
 public class MemberService {
 
   private final MemberRepository memberRepository;
