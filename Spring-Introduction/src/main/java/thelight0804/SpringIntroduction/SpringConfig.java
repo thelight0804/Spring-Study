@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import thelight0804.SpringIntroduction.aop.TimeTraceAop;
 import thelight0804.SpringIntroduction.repository.JDBCMemberRepository;
 import thelight0804.SpringIntroduction.repository.JDBCTemplateMemberRepository;
 import thelight0804.SpringIntroduction.repository.JPAMemberRepository;
@@ -41,6 +42,11 @@ public class SpringConfig {
   @Bean
   public MemberService memberService() {
     return new MemberService(memberRepository);
+  }
+
+  @Bean
+  public TimeTraceAop timeTraceAop(){
+    return new TimeTraceAop();
   }
 
 //  @Bean
