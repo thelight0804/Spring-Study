@@ -29,18 +29,25 @@ class Thelight0804ApplicationTests {
     //첫번째 곡 저장
     Song s1 = new Song(); //Song 객체 생성
     //객체 데이터 저장
-    s1.setTitle("三日月の舞");
-    s1.setDetail("발매: 2015년 7월 8일");
+    s1.setTitle("I AM");
+    s1.setDetail("IVE");
     s1.setCreateDate(LocalDateTime.now());
     //Repository를 통해 DB 저장
     this.songRepository.save(s1);
 
     //두번째 곡 저장
     Song s2 = new Song();
-    s2.setTitle("はじまりの旋律");
-    s2.setDetail("발매: 2015년 7월 8일");
+    s2.setTitle("손오공");
+    s2.setDetail("세븐틴");
     s2.setCreateDate(LocalDateTime.now());
     this.songRepository.save(s2);
+
+    //두번째 곡 저장
+    Song s3 = new Song();
+    s3.setTitle("Ditto");
+    s3.setDetail("NewJeans");
+    s3.setCreateDate(LocalDateTime.now());
+    this.songRepository.save(s3);
   }*/
 
   //findAll
@@ -121,7 +128,7 @@ class Thelight0804ApplicationTests {
   //Create comment
   /*@Test
   void testJpa(){
-    Optional<Song> os = this.songRepository.findById(6);
+    Optional<Song> os = this.songRepository.findById(2);
     assertTrue(os.isPresent());
     Song s = os.get();
 
