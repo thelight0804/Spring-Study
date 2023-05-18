@@ -7,7 +7,9 @@
   </thead>
   <tbody>
   <tr th:each="song : ${songList}">
-    <td th:text="${song.title}"></td>
+    <td>
+      <a th:href="@{|/song/detail/${song.id}|}" th:text="${song.title}"></a>
+    </td>
     <td th:text="${song.createDate}"></td>
   </tr>
   </tbody>
