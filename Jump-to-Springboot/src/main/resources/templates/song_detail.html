@@ -5,7 +5,10 @@
   <title>songDetail</title>
 </head>
 <body>
-  <h1 th:text="${song.title}"></h1>
+  <h1>곡 제목</h1>
+  <h2 th:text="${song.title}"></h2>
+  <br>
+  <h3>곡 정보</h3>
   <div th:text="${song.detail}"></div>
 </body>
 </html>
