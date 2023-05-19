@@ -10,5 +10,17 @@
   <br>
   <h3>곡 정보</h3>
   <div th:text="${song.detail}"></div>
+  <h3>댓글</h3>
+  <h5 th:text="|총 ${#lists.size(song.commentList)}개|"></h5>
+  <div>
+    <ul>
+      <li th:each="comment : ${song.commentList}" th:text="${comment.content}"></li>
+    </ul>
+  </div>
+
+  <form th:action="@{|/comment/create/${song.id}|}" method="post">
+    <textarea name="content" id="content" rows="15"></textarea>
+    <input type="submit" value="댓글등록">
+  </form>
 </body>
 </html>
