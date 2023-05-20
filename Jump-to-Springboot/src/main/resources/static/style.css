@@ -1,7 +1,20 @@
 textarea {
+  margin: 5px;
   width: 100%;
 }
-
-.submit {
-  margin-top: 10px;
+#info{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+h5{
+  border-bottom: 3px solid gray;
+  margin: 5px;
+}
+#comment{
+  margin: 5px;
+}
+@media (max-width: 600px) {
+  #info{
+    display: block;
+  }
 }

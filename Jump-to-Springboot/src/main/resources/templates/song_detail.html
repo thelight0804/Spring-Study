@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-<head>
-  <meta charset="UTF-8">
-  <title>songDetail</title>
-</head>
-<body>
-  <h1>곡 제목</h1>
-  <h2 th:text="${song.title}"></h2>
-  <br>
-  <h3>곡 정보</h3>
-  <div th:text="${song.detail}"></div>
-  <h3>댓글</h3>
-  <h5 th:text="|총 ${#lists.size(song.commentList)}개|"></h5>
-  <div>
-    <ul>
-      <li th:each="comment : ${song.commentList}" th:text="${comment.content}"></li>
-    </ul>
-  </div>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+  <head>
+    <meta charset="UTF-8">
+    <title>songDetail</title>
+  </head>
+  <body>
+    <div id="info">
+      <div class="card" style="margin: 5px;">
+        <ul class="list-group list-group-flush">
+          <h4 class="card-header">곡 제목</h4>
+          <li th:text="${song.title}" class="list-group-item"></li>
+          <h4 class="card-header">곡 정보</h4>
+          <li th:text="${song.detail}" class="list-group-item"></li>
+        </ul>
+      </div>
 
-  <form th:action="@{|/comment/create/${song.id}|}" method="post">
-    <textarea name="content" id="content" rows="15"></textarea>
-    <input type="submit" value="댓글등록">
-  </form>
-</body>
+      <div>
+        <h5 th:text="|${#lists.size(song.commentList)}개의 댓글이 있습니다.|"></h5>
+        <div th:each="comment : ${song.commentList}">
+          <div class="card" id="comment">
+            <div class="card-body">
+              <div th:text="${comment.content}"></div>
+              <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+              <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form th:action="@{|/comment/create/${song.id}|}" method="post">
+      <textarea name="content" id="content" rows="15"></textarea>
+      <input type="submit" id="submit-comment" value="댓글등록">
+    </form>
+  </body>
 </html>

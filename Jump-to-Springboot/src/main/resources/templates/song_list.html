@@ -1,16 +1,21 @@
-<table>
-  <thead>
-  <tr>
-    <th>제목</th>
-    <th>작성일시</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="song : ${songList}">
-    <td>
-      <a th:href="@{|/song/detail/${song.id}|}" th:text="${song.title}"></a>
-    </td>
-    <td th:text="${song.createDate}"></td>
-  </tr>
-  </tbody>
-</table>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<div class="container my-3">
+  <table class="table">
+    <thead class="table-dark">
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="song, loop : ${songList}">
+      <td th:text="${loop.count}"></td>
+      <td>
+        <a th:href="@{|/song/detail/${song.id}|}" th:text="${song.title}"></a>
+      </td>
+      <td th:text="${#temporals.format(song.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
