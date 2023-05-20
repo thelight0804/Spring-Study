@@ -19,7 +19,7 @@ public class SongController {
   private final SongService songService; //Service 객체 선언
 
   @GetMapping("/list")
-  public String list(Model model){
+  public String list(Model model) {
     List<Song> songList = this.songService.getList(); //Service 사용
     model.addAttribute("songList", songList);
     return "song_list";
@@ -33,4 +33,9 @@ public class SongController {
     return "song_detail";
   }
 
+  //음악 등록
+  @GetMapping("/create")
+  public String songCreate(){
+    return "song_form";
+  }
 }

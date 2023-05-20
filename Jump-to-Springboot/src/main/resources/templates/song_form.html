@@ -1,0 +1,19 @@
+<html layout:decorate="~{layout}">
+  <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/song_form.css}">
+    <!--song-btn css 요소 재사용-->
+    <link rel="stylesheet" type="text/css" th:href="@{/song_list.css}">
+  </head>
+  <div layout:fragment="content" class="container">
+    <h5>음악 등록</h5>
+    <form th:action="@{/song/create}" method="post">
+      <label for="subject" class="form-label">제목</label>
+      <input type="text" name="title" class="form-input">
+
+      <label for="detail" class="form-label">내용</label>
+      <textarea placeholder="발매일:YYYY/MM/DD" name="detail" class="form-input"></textarea>
+
+      <input type="submit" value="저장하기" class="song-btn">
+    </form>
+  </div>
+</html>
