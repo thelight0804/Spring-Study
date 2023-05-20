@@ -1,4 +1,7 @@
 <html layout:decorate="~{layout}"></html>
+<head>
+  <link rel="stylesheet" type="text/css" th:href="@{/song_list.css}">
+</head>
 <div layout:fragment="content" class="container my-3">
   <table class="table">
     <thead class="table-dark">
@@ -18,4 +21,5 @@
     </tr>
     </tbody>
   </table>
+  <a th:href="@{/song/create}" class="song-btn">음악 등록</a>
 </div>
