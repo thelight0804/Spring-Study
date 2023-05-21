@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/song")
 @RequiredArgsConstructor
@@ -33,9 +35,16 @@ public class SongController {
     return "song_detail";
   }
 
-  //음악 등록
+  //음악 등록 템플릿 이동
   @GetMapping("/create")
-  public String songCreate(){
+  public String songCreate() {
     return "song_form";
+  }
+
+  //음악 등록
+  @PostMapping("/create")
+  public String songCreate(@RequestParam String title, @RequestParam String detail) {
+    this.songService.create(title, detail);
+    return "redirect:/song/list"; //전송 후 해당 페이지로 이동
   }
 }
