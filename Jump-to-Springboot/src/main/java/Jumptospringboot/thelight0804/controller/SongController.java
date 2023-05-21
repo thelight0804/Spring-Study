@@ -1,12 +1,15 @@
 package Jumptospringboot.thelight0804.controller;
 
 import Jumptospringboot.thelight0804.domain.Song;
+import Jumptospringboot.thelight0804.form.SongForm;
 import Jumptospringboot.thelight0804.repository.SongRepository;
 import Jumptospringboot.thelight0804.service.SongService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,8 +46,11 @@ public class SongController {
 
   //음악 등록
   @PostMapping("/create")
-  public String songCreate(@RequestParam String title, @RequestParam String detail) {
-    this.songService.create(title, detail);
+  public String songCreate(@Valid SongForm songForm, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) { //form 입력 값 체크
+      return "song_form";
+    }
+    this.songService.create(songForm.getTitle(), songForm.getDetail());
     return "redirect:/song/list"; //전송 후 해당 페이지로 이동
   }
 }
