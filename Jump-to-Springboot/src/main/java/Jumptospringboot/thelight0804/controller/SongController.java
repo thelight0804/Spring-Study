@@ -40,7 +40,7 @@ public class SongController {
 
   //음악 등록 템플릿 이동
   @GetMapping("/create")
-  public String songCreate() {
+  public String songCreate(SongForm songForm) {
     return "song_form";
   }
 
