@@ -1,6 +1,7 @@
 package Jumptospringboot.thelight0804.controller;
 
 import Jumptospringboot.thelight0804.domain.Song;
+import Jumptospringboot.thelight0804.form.CommentForm;
 import Jumptospringboot.thelight0804.form.SongForm;
 import Jumptospringboot.thelight0804.repository.SongRepository;
 import Jumptospringboot.thelight0804.service.SongService;
@@ -32,7 +33,7 @@ public class SongController {
 
   //상세 페이지 mapping
   @GetMapping(value = "/detail/{id}") //id 값에 따라 요청이 달라진다
-  public String detail(Model model, @PathVariable("id") Integer id) {
+  public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
     Song song = this.songService.getSong(id);
     model.addAttribute("song", song);
     return "song_detail";

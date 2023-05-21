@@ -1,6 +1,7 @@
 <html layout:decorate="~{layout}">
 <head>
   <link rel="stylesheet" type="text/css" th:href="@{/song_detail.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/template.css}">
 </head>
 <div layout:fragment="content">
   <div id="info">
@@ -29,9 +30,14 @@
       </div>
     </div>
   </div>
-  <form th:action="@{|/comment/create/${song.id}|}" method="post">
-    <textarea name="content" id="content" rows="15"></textarea>
-    <input type="submit" value="댓글등록">
+  <!--  비어있는 입력값의 에러 표시  -->
+  <form th:action="@{|/comment/create/${song.id}|}" th:object="${commentForm}" method="post">
+    <div class="alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+      <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+    </div>
+
+    <textarea name="content" id="content" rows="15" th:field="*{content}"></textarea>
+    <input type="submit" value="댓글등록" class="btn">
   </form>
 </div>
 </html>
