@@ -8,9 +8,8 @@
     <h5>음악 등록</h5>
     <!--  비어있는 입력값의 에러 표시  -->
     <form th:action="@{/song/create}" th:object="${songForm}" method="post">
-      <div class="alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-        <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-      </div>
+      <!--   form_errors 템플릿 사용   -->
+      <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 
       <label for="subject" class="form-label">제목</label>
       <input type="text" name="title" class="form-input" th:field="*{title}">
@@ -18,7 +17,7 @@
       <label for="detail" class="form-label">상세 내용</label>
       <textarea placeholder="발매일:YYYY/MM/DD" name="detail" class="form-input" th:field="*{detail}"></textarea>
 
-      <input type="submit" value="저장하기" class="song-btn">
+      <input type="submit" value="저장하기" class="btn">
     </form>
   </div>
 </html>
