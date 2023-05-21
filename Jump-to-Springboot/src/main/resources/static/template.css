@@ -1,0 +1,25 @@
+/*버튼*/
+.btn{
+  border: 1px solid gray;
+  border-radius: .25rem;
+  padding: 10px;
+  background-color: #525c66;
+  color: white;
+  text-decoration: none;
+}
+.btn:hover{
+  background-color: #282a2d;
+  color: white;
+}
+
+/*오류 메시지*/
+.alert-danger{
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.25rem;
+
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
