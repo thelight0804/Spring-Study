@@ -7,6 +7,7 @@ import Jumptospringboot.thelight0804.domain.Comment;
 import Jumptospringboot.thelight0804.domain.Song;
 import Jumptospringboot.thelight0804.repository.CommentRepository;
 import Jumptospringboot.thelight0804.repository.SongRepository;
+import Jumptospringboot.thelight0804.service.SongService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -160,5 +161,18 @@ class Thelight0804ApplicationTests {
 
     assertEquals(1, commentList.size());
     assertEquals("갓띵곡", commentList.get(0).getContent());
+  }*/
+
+  @Autowired
+  private SongService songService;
+
+  //Create many data
+  /*@Test
+  void createData(){
+    for (int i = 0; i < 300; i++) {
+      String title = String.format("test [%03d]", i);
+      String detail = "YYYY/MM/DD";
+      this.songService.create(title, detail);
+    }
   }*/
 }
