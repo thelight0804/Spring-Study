@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -36,5 +39,11 @@ public class SongService {
     s.setDetail(detail); //set 내용
     s.setCreateDate(LocalDateTime.now()); //set 시간
     this.songRepository.save(s); //Repository에 넘김
+  }
+
+  //paging song
+  public Page<Song> getList(int page){
+    Pageable pageable = PageRequest.of(page, 10);
+    return this.songRepository.findAll(pageable);
   }
 }

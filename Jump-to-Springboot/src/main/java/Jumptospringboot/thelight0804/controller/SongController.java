@@ -8,6 +8,7 @@ import Jumptospringboot.thelight0804.service.SongService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +26,11 @@ public class SongController {
   private final SongService songService; //Service 객체 선언
 
   @GetMapping("/list")
-  public String list(Model model) {
-    List<Song> songList = this.songService.getList(); //Service 사용
-    model.addAttribute("songList", songList);
+  public String list(Model model, @RequestParam(value="page", defaultValue = "0") int page) {
+    //List<Song> songList = this.songService.getList(); //Service 사용
+    Page<Song> paging = this.songService.getList(page);
+    //model.addAttribute("songList", songList);
+    model.addAttribute("paging", paging);
     return "song_list";
   }
 
