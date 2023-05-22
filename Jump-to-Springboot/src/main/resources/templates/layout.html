@@ -7,9 +7,13 @@
 
   <!-- link -->
   <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/template.css}">
+  <script th:src="@{/bootstrap.min.js}"></script>
   <title>song list</title>
 </head>
 <body>
+  <!-- navbar -->
+  <nav th:replace="~{navbar :: navbarFragment}"></nav>
   <!-- body start -->
   <th:block layout:fragment="content"></th:block>
   <!-- body end -->
