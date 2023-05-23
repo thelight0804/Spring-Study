@@ -4,6 +4,7 @@ import Jumptospringboot.thelight0804.DataNotFoundException;
 import Jumptospringboot.thelight0804.domain.Song;
 import Jumptospringboot.thelight0804.repository.SongRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -43,7 +45,11 @@ public class SongService {
 
   //paging song
   public Page<Song> getList(int page){
-    Pageable pageable = PageRequest.of(page, 10);
+    //date descending order song list
+    List<Sort.Order> sorts = new ArrayList<>();
+    sorts.add(Sort.Order.desc("createDate"));
+    Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+    
     return this.songRepository.findAll(pageable);
   }
 }
