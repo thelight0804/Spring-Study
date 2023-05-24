@@ -1,6 +1,4 @@
 <html layout:decorate="~{layout}"></html>
-<head>
-</head>
 <div layout:fragment="content" class="container my-3">
   <table class="table">
     <thead class="table-dark">
@@ -15,6 +13,9 @@
       <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
       <td>
         <a th:href="@{|/song/detail/${song.id}|}" th:text="${song.title}"></a>
+        <!-- 댓글 개수 표시 -->
+        <span style="color: #ff6531;" th:if="${#lists.size(song.commentList) > 0}"
+              th:text="${#lists.size(song.commentList)}"></span>
       </td>
       <td th:text="${#temporals.format(song.createDate, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
