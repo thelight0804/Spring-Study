@@ -25,7 +25,6 @@ public class SecurityConfig {
       .and() //change XFrameOptions
       .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN));
     return http.build();
-
   }
 
   @Bean //PasswordEncoder (BCryptPasswordEncoder)
