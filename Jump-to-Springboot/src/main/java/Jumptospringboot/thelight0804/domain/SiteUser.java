@@ -18,7 +18,7 @@ public class SiteUser {
   private Long id;
 
   @Column(unique = true) //중복 X
-  private String name; //유저 이름
+  private String username; //유저 이름
 
   @Column(unique = true)
   private String email;

@@ -16,7 +16,7 @@ public class UserService {
 
   public SiteUser create(String username, String email, String password) {
     SiteUser user = new SiteUser(); //user 객체 생성
-    user.setName(username); //name 설정
+    user.setUsername(username); //name 설정
     user.setEmail(email); //email 설정
     //비밀번호 암호화
     //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
