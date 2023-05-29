@@ -20,14 +20,19 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
-      .requestMatchers(new AntPathRequestMatcher("/**"))
-      .permitAll()
+        .requestMatchers(new AntPathRequestMatcher("/**"))
+        .permitAll()
       .and() //allow H2 DataBase
-      .csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+       .csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
       .and() //change XFrameOptions
-      .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
+        .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
       .and() //login
-      .formLogin().loginPage("/user/login").defaultSuccessUrl("/");
+        .formLogin().loginPage("/user/login").defaultSuccessUrl("/")
+      .and() //logout
+        .logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+        .logoutSuccessUrl("/") //redirect root page
+        .invalidateHttpSession(true);
     return http.build();
   }
 
