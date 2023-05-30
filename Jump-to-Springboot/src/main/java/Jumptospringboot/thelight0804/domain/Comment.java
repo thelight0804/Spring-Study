@@ -22,6 +22,9 @@ public class Comment {
   @Column(length = 200)
   private String content;
 
+  @ManyToOne
+  private SiteUser author;
+
   private LocalDateTime createDate;
 
   @ManyToOne
