@@ -9,6 +9,7 @@ import Jumptospringboot.thelight0804.service.UserService;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class CommentController {
   private final CommentService commentService;
   private final UserService userService;
 
+  @PreAuthorize("isAuthenticated()") //require login
   @PostMapping("/create/{id}")
   public String createComment(Model model, @PathVariable("id") Integer id,
     @Valid CommentForm commentForm, BindingResult bindingResult, Principal principal) {

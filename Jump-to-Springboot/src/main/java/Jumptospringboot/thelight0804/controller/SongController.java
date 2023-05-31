@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,12 +48,14 @@ public class SongController {
   }
 
   //음악 등록 템플릿 이동
+  @PreAuthorize("isAuthenticated()")
   @GetMapping("/create")
   public String songCreate(SongForm songForm) {
     return "song_form";
   }
 
   //음악 등록
+  @PreAuthorize("isAuthenticated()")
   @PostMapping("/create")
   public String songCreate(@Valid SongForm songForm,
     BindingResult bindingResult, Principal principal) {
