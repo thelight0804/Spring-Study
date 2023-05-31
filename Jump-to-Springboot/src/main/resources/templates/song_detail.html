@@ -10,6 +10,8 @@
         <li th:text="${song.title}" class="list-group-item"></li>
         <h4 class="card-header">곡 정보</h4>
         <li th:text="${song.detail}" class="list-group-item"></li>
+        <h4 class="card-header">작성자</h4>
+        <li th:if="${song.author != null}" class="list-group-item" th:text="${song.author.username}"></li>
       </ul>
     </div>
 
@@ -21,6 +23,9 @@
             <div th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
               <div class="badge bg-light text-dark p-2 text-start">
+                <div class="mb-2">
+                  <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
+                </div>
                 <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
               </div>
             </div>
