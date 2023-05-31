@@ -1,4 +1,4 @@
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" type="text/css" th:href="@{/song_detail.css}">
 </head>
@@ -34,7 +34,9 @@
     <!--   form_errors 템플릿 사용   -->
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 
-    <textarea name="content" id="content" rows="15" th:field="*{content}"></textarea>
+    <!-- 로그인 상태에 따라 textarea 작성 방지 -->
+    <textarea name="content" id="content" rows="15" th:field="*{content}" sec:authorize="isAnonymous()" disabled></textarea>
+    <textarea name="content" id="content" rows="15" th:field="*{content}" sec:authorize="isAuthenticated()"></textarea>
     <input type="submit" value="댓글등록" class="btn">
   </form>
 </div>

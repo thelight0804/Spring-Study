@@ -48,14 +48,14 @@ public class SongController {
   }
 
   //음악 등록 템플릿 이동
-  @PreAuthorize("isAuthenticated()")
+  @PreAuthorize("isAuthenticated()") //require login
   @GetMapping("/create")
   public String songCreate(SongForm songForm) {
     return "song_form";
   }
 
   //음악 등록
-  @PreAuthorize("isAuthenticated()")
+  @PreAuthorize("isAuthenticated()") //require login
   @PostMapping("/create")
   public String songCreate(@Valid SongForm songForm,
     BindingResult bindingResult, Principal principal) {
