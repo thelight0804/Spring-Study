@@ -1,7 +1,9 @@
 package Jumptospringboot.thelight0804.service;
 
+import Jumptospringboot.thelight0804.DataNotFoundException;
 import Jumptospringboot.thelight0804.domain.SiteUser;
 import Jumptospringboot.thelight0804.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,5 +25,14 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(password)); //비밀번호 설정
     this.userRepository.save(user); //Repo -> DB 저장
     return user;
+  }
+
+  public SiteUser getUser(String username) { //user 객체 조회
+    Optional<SiteUser> siteUser = this.userRepository.findByusername(username);
+    if (siteUser.isPresent()) {
+      return siteUser.get();
+    } else {
+      throw new DataNotFoundException("user is not found");
+    }
   }
 }

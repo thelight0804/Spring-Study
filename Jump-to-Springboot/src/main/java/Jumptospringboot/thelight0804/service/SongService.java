@@ -1,6 +1,7 @@
 package Jumptospringboot.thelight0804.service;
 
 import Jumptospringboot.thelight0804.DataNotFoundException;
+import Jumptospringboot.thelight0804.domain.SiteUser;
 import Jumptospringboot.thelight0804.domain.Song;
 import Jumptospringboot.thelight0804.repository.SongRepository;
 import java.time.LocalDateTime;
@@ -35,11 +36,12 @@ public class SongService {
     }
   }
 
-  public void create(String title, String detail) {
+  public void create(String title, String detail, SiteUser user) {
     Song s = new Song(); //객체 생성
     s.setTitle(title); //set 제목
     s.setDetail(detail); //set 내용
     s.setCreateDate(LocalDateTime.now()); //set 시간
+    s.setAuthor(user); //작성자
     this.songRepository.save(s); //Repository에 넘김
   }
 

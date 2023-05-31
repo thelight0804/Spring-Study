@@ -1,11 +1,14 @@
 package Jumptospringboot.thelight0804.controller;
 
+import Jumptospringboot.thelight0804.domain.SiteUser;
 import Jumptospringboot.thelight0804.domain.Song;
 import Jumptospringboot.thelight0804.form.CommentForm;
 import Jumptospringboot.thelight0804.form.SongForm;
 import Jumptospringboot.thelight0804.repository.SongRepository;
 import Jumptospringboot.thelight0804.service.SongService;
+import Jumptospringboot.thelight0804.service.UserService;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,9 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SongController {
 
   private final SongService songService; //Service 객체 선언
+  private final UserService userService; //유저 service 객체 선언
 
   @GetMapping("/list")
-  public String list(Model model, @RequestParam(value="page", defaultValue = "0") int page) {
+  public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
     //List<Song> songList = this.songService.getList(); //Service 사용
     Page<Song> paging = this.songService.getList(page);
     //model.addAttribute("songList", songList);
@@ -50,11 +54,13 @@ public class SongController {
 
   //음악 등록
   @PostMapping("/create")
-  public String songCreate(@Valid SongForm songForm, BindingResult bindingResult) {
+  public String songCreate(@Valid SongForm songForm,
+    BindingResult bindingResult, Principal principal) {
     if (bindingResult.hasErrors()) { //form 입력 값 체크
       return "song_form";
     }
-    this.songService.create(songForm.getTitle(), songForm.getDetail());
+    SiteUser siteUser = this.userService.getUser(principal.getName());
+    this.songService.create(songForm.getTitle(), songForm.getDetail(), siteUser);
     return "redirect:/song/list"; //전송 후 해당 페이지로 이동
   }
 }
