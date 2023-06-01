@@ -31,7 +31,9 @@ public class Song {
   @ManyToOne //글쓴이
   private SiteUser author;
 
-  private LocalDateTime createDate;
+  private LocalDateTime createDate; //생성 시간
+
+  private LocalDateTime updateDate; //수정 시간
 
   @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
   private List<Comment> commentList;

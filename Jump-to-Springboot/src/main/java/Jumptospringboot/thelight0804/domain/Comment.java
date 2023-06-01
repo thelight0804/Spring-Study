@@ -25,7 +25,9 @@ public class Comment {
   @ManyToOne
   private SiteUser author;
 
-  private LocalDateTime createDate;
+  private LocalDateTime createDate; //생성 시간
+
+  private LocalDateTime updateDate; //수정 시간
 
   @ManyToOne
   private Song song;
