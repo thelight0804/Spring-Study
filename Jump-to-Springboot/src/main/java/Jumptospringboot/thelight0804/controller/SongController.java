@@ -96,4 +96,16 @@ public class SongController {
     this.songService.modify(song, songForm.getTitle(), songForm.getDetail());
     return String.format("redirect:/song/detail/%s", id);
   }
+
+  //삭제
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/delete/{id}")
+  public String songDelete(Principal principal, @PathVariable("id") Integer id) {
+    Song song = this.songService.getSong(id);
+    if (!song.getAuthor().getUsername().equals(principal.getName())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 삭제 권한이 없습니다");
+    }
+    this.songService.delete(song);
+    return "redirect:/";
+  }
 }

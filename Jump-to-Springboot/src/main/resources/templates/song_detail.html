@@ -17,6 +17,10 @@
          sec:authorize="isAuthenticated()"
          th:if="${song.author != null and #authentication.getPrincipal().getUsername() == song.author.username}"
          th:text="수정"></a>
+      <a href="javascript:void(0);" th:data-uri="@{|/song/delete/${song.id}|}" class="delete btn"
+         sec:authorize="isAuthenticated()"
+         th:if="${song.author != null and #authentication.getPrincipal().getUsername() == song.author.username}"
+         th:text="삭제"></a>
     </div>
 
     <div>
@@ -49,4 +53,14 @@
     <input type="submit" value="댓글등록" class="btn">
   </form>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+  const delete_elements = document.getElementsByClassName("delete");
+  Array.from(delete_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("정말로 삭제하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
+  });
+</script>
 </html>

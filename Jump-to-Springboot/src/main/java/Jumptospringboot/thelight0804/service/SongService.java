@@ -62,4 +62,9 @@ public class SongService {
     song.setUpdateDate(LocalDateTime.now());
     this.songRepository.save(song);
   }
+
+  //delete song
+  public void delete(Song song) {
+    this.songRepository.delete(song);
+  }
 }
