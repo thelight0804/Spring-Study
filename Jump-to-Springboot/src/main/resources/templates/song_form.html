@@ -5,7 +5,9 @@
   <div layout:fragment="content" class="container">
     <h5>음악 등록</h5>
     <!--  비어있는 입력값의 에러 표시  -->
-    <form th:action="@{/song/create}" th:object="${songForm}" method="post">
+    <form th:object="${songForm}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <!--<form th:action="@{/song/create}" th:object="${songForm}" method="post">-->
       <!--   form_errors 템플릿 사용   -->
       <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 

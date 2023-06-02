@@ -54,4 +54,12 @@ public class SongService {
 
     return this.songRepository.findAll(pageable);
   }
+
+  //modify song
+  public void modify(Song song, String title, String detail) {
+    song.setTitle(title);
+    song.setDetail(detail);
+    song.setUpdateDate(LocalDateTime.now());
+    this.songRepository.save(song);
+  }
 }

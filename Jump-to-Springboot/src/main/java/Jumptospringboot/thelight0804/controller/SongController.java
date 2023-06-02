@@ -81,4 +81,19 @@ public class SongController {
     songForm.setDetail(song.getDetail());
     return "song_form";
   }
+
+  @PreAuthorize("isAuthenticated()")
+  @PostMapping("/modify/{id}")
+  public String songModify(@Valid SongForm songForm, BindingResult bindingResult,
+    Principal principal, @PathVariable("id") Integer id) {
+    if (bindingResult.hasErrors()) {
+      return "song_form";
+    }
+    Song song = this.songService.getSong(id);
+    if (!song.getAuthor().getUsername().equals(principal.getName())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정권한이 없습니다.");
+    }
+    this.songService.modify(song, songForm.getTitle(), songForm.getDetail());
+    return String.format("redirect:/song/detail/%s", id);
+  }
 }
