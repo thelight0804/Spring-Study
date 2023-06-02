@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 @RequestMapping("/song")
 @RequiredArgsConstructor
@@ -65,5 +67,18 @@ public class SongController {
     SiteUser siteUser = this.userService.getUser(principal.getName());
     this.songService.create(songForm.getTitle(), songForm.getDetail(), siteUser);
     return "redirect:/song/list"; //전송 후 해당 페이지로 이동
+  }
+
+  //수정
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/modify/{id}")
+  public String songModify(SongForm songForm, @PathVariable("id") Integer id, Principal principal){
+    Song song = this.songService.getSong(id);
+    if (!song.getAuthor().getUsername().equals(principal.getName())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정 권한이 없습니다!");
+    }
+    songForm.setTitle(song.getTitle());
+    songForm.setDetail(song.getDetail());
+    return "song_form";
   }
 }
