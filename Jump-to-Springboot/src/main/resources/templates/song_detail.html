@@ -37,9 +37,9 @@
                 <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
               </div>
             </div>
-            <a th:href="@{|/song/modify/${song.id}|}" class="btn"
+            <a th:href="@{|/comment/modify/${comment.id}|}" class="btn"
                 sec:authorize="isAuthenticated()"
-                th:if="${song.author != null and #authentication.getPrincipal().getUsername() == song.author.username}"
+                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
                 th:text="수정"></a>
           </div>
         </div>
