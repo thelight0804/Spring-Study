@@ -41,4 +41,9 @@ public class CommentService {
     comment.setUpdateDate(LocalDateTime.now());
     this.commentRepository.save(comment);
   }
+
+  //삭제
+  public void delete(Comment comment){
+    this.commentRepository.delete(comment);
+  }
 }
