@@ -12,6 +12,10 @@
         <li th:text="${song.detail}" class="list-group-item"></li>
         <h4 class="card-header">작성자</h4>
         <li th:if="${song.author != null}" class="list-group-item" th:text="${song.author.username}"></li>
+        <div th:if="${song.updateDate != null}">
+          <h4 class="card-header">수정 일시</h4>
+          <li th:text="${#temporals.format(song.updateDate, 'yyyy-MM-dd HH:mm')}"></li>
+        </div>
       </ul>
       <a th:href="@{|/song/modify/${song.id}|}" class="btn"
          sec:authorize="isAuthenticated()"
@@ -30,6 +34,11 @@
           <div class="card-body">
             <div th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
+              <!-- 수정일시 -->
+              <div th:if="${comment.updateDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+                <div class="mb-2">수정 일시</div>
+                <div th:text="${#temporals.format(comment.updateDate, 'yyyy-MM-dd HH:mm')}"></div>
+              </div>
               <div class="badge bg-light text-dark p-2 text-start">
                 <div class="mb-2">
                   <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
