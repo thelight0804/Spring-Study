@@ -6,10 +6,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,4 +39,7 @@ public class Song {
 
   @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
   private List<Comment> commentList;
+  
+  @ManyToMany
+  Set<SiteUser> voter; //추천인
 }
