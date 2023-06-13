@@ -67,4 +67,10 @@ public class SongService {
   public void delete(Song song) {
     this.songRepository.delete(song);
   }
+
+  //recommend
+  public void vote(Song song, SiteUser siteUser) {
+    song.getVoter().add(siteUser);
+    this.songRepository.save(song);
+  }
 }

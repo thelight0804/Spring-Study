@@ -84,4 +84,14 @@ public class CommentController {
     this.commentService.delete(comment);
     return String.format("redirect:/song/detail/%s", comment.getSong().getId());
   }
+
+  //추천
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/vote/{id}")
+  public String commentVote(Principal principal, @PathVariable("id") Integer id) {
+    Comment comment = this.commentService.getComment(id);
+    SiteUser siteUser = this.userService.getUser(principal.getName());
+    this.commentService.vote(comment, siteUser);
+    return String.format("redirect:/song/detail/%s", comment.getSong().getId());
+  }
 }
