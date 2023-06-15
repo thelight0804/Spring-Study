@@ -39,7 +39,7 @@ public class Song {
 
   @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
   private List<Comment> commentList;
-  
+
   @ManyToMany
   Set<SiteUser> voter; //추천인
 }

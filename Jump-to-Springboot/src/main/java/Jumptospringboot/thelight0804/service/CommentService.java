@@ -16,13 +16,14 @@ public class CommentService {
 
   private final CommentRepository commentRepository;
 
-  public void create(Song song, String content, SiteUser author) {
+  public Comment create(Song song, String content, SiteUser author) {
     Comment comment = new Comment();
     comment.setContent(content);
     comment.setCreateDate(LocalDateTime.now());
     comment.setSong(song);
     comment.setAuthor(author);
     this.commentRepository.save(comment);
+    return comment;
   }
 
   //조회
