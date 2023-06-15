@@ -17,6 +17,10 @@
           <li th:text="${#temporals.format(song.updateDate, 'yyyy-MM-dd HH:mm')}"></li>
         </div>
       </ul>
+      <a href="javascript:void(0);" class="recommend btn"
+         th:data-uri="@{|/song/vote/${song.id}|}">추천
+        <span class="badge rounded-pill" th:text="${#lists.size(song.voter)}"></span>
+      </a>
       <a th:href="@{|/song/modify/${song.id}|}" class="btn"
          sec:authorize="isAuthenticated()"
          th:if="${song.author != null and #authentication.getPrincipal().getUsername() == song.author.username}"
@@ -30,8 +34,10 @@
     <div>
       <h5 th:text="|${#lists.size(song.commentList)}개의 댓글이 있습니다.|"></h5>
       <div th:each="comment : ${song.commentList}">
+        <!--Anchor-->
         <div class="card" id="comment">
           <div class="card-body">
+            <a th:id="|comment_${comment.id}|"></a>
             <div th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
               <!-- 수정일시 -->
@@ -46,6 +52,10 @@
                 <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
               </div>
             </div>
+            <a href="javascript:void(0);" class="recommend btn"
+               th:data-uri="@{|/comment/vote/${comment.id}|}">추천
+              <span class="badge rounded-pill" th:text="${#lists.size(comment.voter)}"></span>
+            </a>
             <a th:href="@{|/comment/modify/${comment.id}|}" class="btn"
                 sec:authorize="isAuthenticated()"
                 th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
@@ -78,6 +88,14 @@
               location.href = this.dataset.uri;
           };
       });
+  });
+  const recommend_elements = document.getElementsByClassName("recommend");
+  Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+      if(confirm("정말로 추천하시겠습니까?")) {
+        location.href = this.dataset.uri;
+      };
+    });
   });
 </script>
 </html>

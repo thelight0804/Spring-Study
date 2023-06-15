@@ -108,4 +108,14 @@ public class SongController {
     this.songService.delete(song);
     return "redirect:/";
   }
+
+  //추천
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/vote/{id}")
+  public String songVote(Principal principal, @PathVariable("id") Integer id) {
+    Song song = this.songService.getSong(id);
+    SiteUser siteUser = this.userService.getUser(principal.getName());
+    this.songService.vote(song, siteUser);
+    return String.format("redirect:/song/detail/%s", id);
+  }
 }

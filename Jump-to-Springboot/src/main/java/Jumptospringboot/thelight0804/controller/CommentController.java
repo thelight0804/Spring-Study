@@ -41,22 +41,25 @@ public class CommentController {
       model.addAttribute("song", song);
       return "song_detail";
     }
-    this.commentService.create(song, commentForm.getContent(), siteUser);
-    return String.format("redirect:/song/detail/%s", id);
+//  this.commentService.create(song, commentForm.getContent(), siteUser);
+    Comment comment = this.commentService.create(song, commentForm.getContent(), siteUser);
+//  return String.format("redirect:/song/detail/%s", id);
+    return String.format("redirect:/song/detail/%s#comment_%s", comment.getSong().getId(),
+      comment.getId());
   }
 
   //수정
-  @PreAuthorize("isAuthenticated()")
-  @GetMapping("/modify/{id}")
-  public String commentModify(CommentForm commentForm, @PathVariable("id") Integer id,
-    Principal principal) {
-    Comment comment = this.commentService.getComment(id);
-    if (!comment.getAuthor().getUsername().equals(principal.getName())) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정권한이 없습니다.");
-    }
-    commentForm.getContent();
-    return "comment_form";
-  }
+//  @PreAuthorize("isAuthenticated()")
+//  @GetMapping("/modify/{id}")
+//  public String commentModify(CommentForm commentForm, @PathVariable("id") Integer id,
+//    Principal principal) {
+//    Comment comment = this.commentService.getComment(id);
+//    if (!comment.getAuthor().getUsername().equals(principal.getName())) {
+//      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정권한이 없습니다.");
+//    }
+//    commentForm.getContent();
+//    return "comment_form";
+//  }
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/modify/{id}")
@@ -70,7 +73,9 @@ public class CommentController {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정권한이 없습니다.");
     }
     this.commentService.modify(comment, commentForm.getContent());
-    return String.format("redirect:/song/detail/%s", comment.getSong().getId());
+//    return String.format("redirect:/song/detail/%s", comment.getSong().getId());
+    return String.format("redirect:/song/detail/%s#comment_%s", comment.getSong().getId(),
+      comment.getId());
   }
 
   //삭제
@@ -83,5 +88,17 @@ public class CommentController {
     }
     this.commentService.delete(comment);
     return String.format("redirect:/song/detail/%s", comment.getSong().getId());
+  }
+
+  //추천
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/vote/{id}")
+  public String commentVote(Principal principal, @PathVariable("id") Integer id) {
+    Comment comment = this.commentService.getComment(id);
+    SiteUser siteUser = this.userService.getUser(principal.getName());
+    this.commentService.vote(comment, siteUser);
+//    return String.format("redirect:/song/detail/%s", comment.getSong().getId());
+    return String.format("redirect:/song/detail/%s#comment_%s", comment.getSong().getId(),
+      comment.getId());
   }
 }
