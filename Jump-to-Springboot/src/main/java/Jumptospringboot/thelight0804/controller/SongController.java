@@ -72,7 +72,7 @@ public class SongController {
   //수정
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/modify/{id}")
-  public String songModify(SongForm songForm, @PathVariable("id") Integer id, Principal principal){
+  public String songModify(SongForm songForm, @PathVariable("id") Integer id, Principal principal) {
     Song song = this.songService.getSong(id);
     if (!song.getAuthor().getUsername().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정 권한이 없습니다!");
