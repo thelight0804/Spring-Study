@@ -9,7 +9,8 @@
         <h4 class="card-header">곡 제목</h4>
         <li th:text="${song.title}" class="list-group-item"></li>
         <h4 class="card-header">곡 정보</h4>
-        <li th:text="${song.detail}" class="list-group-item"></li>
+        <!--  <li th:text="${song.detail}" class="list-group-item"></li>-->
+        <li class="list-group-item" th:utext="${@commonUtil.markdown(song.detail)}"></li>
         <h4 class="card-header">작성자</h4>
         <li th:if="${song.author != null}" class="list-group-item" th:text="${song.author.username}"></li>
         <div th:if="${song.updateDate != null}">
@@ -38,7 +39,8 @@
         <div class="card" id="comment">
           <div class="card-body">
             <a th:id="|comment_${comment.id}|"></a>
-            <div th:text="${comment.content}"></div>
+            <!--<div th:text="${comment.content}"></div>-->
+            <div class="card-text" th:utext="${@commonUtil.markdown(comment.content)}"></div>
             <div class="d-flex justify-content-end">
               <!-- 수정일시 -->
               <div th:if="${comment.updateDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
