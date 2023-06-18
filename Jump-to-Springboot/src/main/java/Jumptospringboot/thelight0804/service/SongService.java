@@ -61,9 +61,13 @@ public class SongService {
     sorts.add(Sort.Order.desc("createDate"));
     Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 
-//    return this.songRepository.findAll(pageable);
-    Specification<Song> spec = search(kw); //검색
-    return this.songRepository.findAll(spec, pageable);
+    ////use query
+    return this.songRepository.findAllByKeyword(kw, pageable);
+    
+    ////use Specification
+    //return this.songRepository.findAll(pageable);
+    //Specification<Song> spec = search(kw); //검색
+    //return this.songRepository.findAll(spec, pageable);
   }
 
   //modify song
