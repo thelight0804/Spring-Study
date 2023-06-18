@@ -33,11 +33,11 @@ public class SongController {
   private final UserService userService; //유저 service 객체 선언
 
   @GetMapping("/list")
-  public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-    //List<Song> songList = this.songService.getList(); //Service 사용
-    Page<Song> paging = this.songService.getList(page);
-    //model.addAttribute("songList", songList);
+  public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+    @RequestParam(value = "kw", defaultValue = "") String kw) {
+    Page<Song> paging = this.songService.getList(page, kw);
     model.addAttribute("paging", paging);
+    model.addAttribute("kw", kw);
     return "song_list";
   }
 
@@ -70,18 +70,6 @@ public class SongController {
   }
 
   //수정
-//  @PreAuthorize("isAuthenticated()")
-//  @GetMapping("/modify/{id}")
-//  public String songModify(SongForm songForm, @PathVariable("id") Integer id, Principal principal) {
-//    Song song = this.songService.getSong(id);
-//    if (!song.getAuthor().getUsername().equals(principal.getName())) {
-//      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "😟 수정 권한이 없습니다!");
-//    }
-//    songForm.setTitle(song.getTitle());
-//    songForm.setDetail(song.getDetail());
-//    return "song_form";
-//  }
-
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/modify/{id}")
   public String songModify(@Valid SongForm songForm, BindingResult bindingResult,

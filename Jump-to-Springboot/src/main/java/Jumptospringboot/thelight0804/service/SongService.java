@@ -1,9 +1,16 @@
 package Jumptospringboot.thelight0804.service;
 
 import Jumptospringboot.thelight0804.DataNotFoundException;
+import Jumptospringboot.thelight0804.domain.Comment;
 import Jumptospringboot.thelight0804.domain.SiteUser;
 import Jumptospringboot.thelight0804.domain.Song;
 import Jumptospringboot.thelight0804.repository.SongRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -72,5 +80,25 @@ public class SongService {
   public void vote(Song song, SiteUser siteUser) {
     song.getVoter().add(siteUser);
     this.songRepository.save(song);
+  }
+
+  //search
+  private Specification<Song> search(String kw) {
+    return new Specification<Song>() {
+      private static final long serialVersionUID = 1L;
+      @Override
+      public Predicate toPredicate(Root<Song> root, CriteriaQuery<?> query,
+        CriteriaBuilder criteriaBuilder) {
+        query.distinct(true);
+        Join<Song, SiteUser> u1 = root.join("author", JoinType.LEFT);
+        Join<Song, Comment> a = root.join("commentList", JoinType.LEFT);
+        Join<Comment, SiteUser> u2 = a.join("quthor", JoinType.LEFT);
+        return criteriaBuilder.or(criteriaBuilder.like(root.get("title"), "%" + kw + "%"), //제목
+          criteriaBuilder.like(root.get("detail"), "%" + kw + "%"), //내용
+          criteriaBuilder.like(u1.get("username"), "%" + kw + "%"), //질문 작성자
+          criteriaBuilder.like(root.get("content"), "%" + kw + "%"), //답변 내용
+          criteriaBuilder.like(u2.get("username"), "%" + kw + "%")); //답변 작성자
+      }
+    };
   }
 }
