@@ -54,13 +54,16 @@ public class SongService {
   }
 
   //paging song
-  public Page<Song> getList(int page){
+//  public Page<Song> getList(int page){
+  public Page<Song> getList(int page, String kw){
     //date descending order song list
     List<Sort.Order> sorts = new ArrayList<>();
     sorts.add(Sort.Order.desc("createDate"));
     Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 
-    return this.songRepository.findAll(pageable);
+//    return this.songRepository.findAll(pageable);
+    Specification<Song> spec = search(kw); //검색
+    return this.songRepository.findAll(spec, pageable);
   }
 
   //modify song
@@ -90,13 +93,13 @@ public class SongService {
       public Predicate toPredicate(Root<Song> root, CriteriaQuery<?> query,
         CriteriaBuilder criteriaBuilder) {
         query.distinct(true);
-        Join<Song, SiteUser> u1 = root.join("author", JoinType.LEFT);
-        Join<Song, Comment> a = root.join("commentList", JoinType.LEFT);
-        Join<Comment, SiteUser> u2 = a.join("quthor", JoinType.LEFT);
+        Join<Song, SiteUser> u1 = root.join("author", JoinType.LEFT); //Song join SiteUser
+        Join<Song, Comment> a = root.join("commentList", JoinType.LEFT); //Song join Comment
+        Join<Comment, SiteUser> u2 = a.join("author", JoinType.LEFT); //Comment join SiteUser
         return criteriaBuilder.or(criteriaBuilder.like(root.get("title"), "%" + kw + "%"), //제목
           criteriaBuilder.like(root.get("detail"), "%" + kw + "%"), //내용
           criteriaBuilder.like(u1.get("username"), "%" + kw + "%"), //질문 작성자
-          criteriaBuilder.like(root.get("content"), "%" + kw + "%"), //답변 내용
+          criteriaBuilder.like(root.get("detail"), "%" + kw + "%"), //답변 내용
           criteriaBuilder.like(u2.get("username"), "%" + kw + "%")); //답변 작성자
       }
     };

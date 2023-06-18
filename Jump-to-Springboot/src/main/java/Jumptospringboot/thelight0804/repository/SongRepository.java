@@ -4,6 +4,7 @@ import Jumptospringboot.thelight0804.domain.Song;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SongRepository extends JpaRepository<Song, Integer> {
@@ -11,4 +12,5 @@ public interface SongRepository extends JpaRepository<Song, Integer> {
   Song findByTitleAndDetail(String title, String detail);
   List<Song> findByTitleLike(String title);
   Page<Song> findAll(Pageable pageable);
+  Page<Song> findAll(Specification<Song> spec, Pageable pageable);
 }
