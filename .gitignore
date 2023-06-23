@@ -171,3 +171,7 @@ replay_pid*
 
 # 강의 자료
 Spring-Introduction/Handouts/*
+
+#build file
+META-INF
+build/libs/*

@@ -63,7 +63,7 @@ public class SongService {
 
     ////use query
     return this.songRepository.findAllByKeyword(kw, pageable);
-    
+
     ////use Specification
     //return this.songRepository.findAll(pageable);
     //Specification<Song> spec = search(kw); //검색
